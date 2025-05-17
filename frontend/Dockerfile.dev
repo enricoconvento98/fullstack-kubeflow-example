@@ -1,0 +1,16 @@
+FROM node:16
+
+WORKDIR /app
+
+# Create node_modules directory with correct permissions
+RUN mkdir -p /app/node_modules && chown -R node:node /app
+
+# Switch to node user
+USER node
+
+COPY --chown=node:node package*.json ./
+RUN npm install
+
+COPY --chown=node:node . .
+
+CMD ["npm", "start"]
